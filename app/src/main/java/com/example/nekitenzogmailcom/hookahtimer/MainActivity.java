@@ -1,6 +1,5 @@
 package com.example.nekitenzogmailcom.hookahtimer;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,23 +7,23 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.os.Build;
+import android.os.PersistableBundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Chronometer;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
-import static android.view.MotionEvent.*;
+import java.lang.reflect.Array;
+
 import static com.example.nekitenzogmailcom.hookahtimer.R.layout.activity_main;
+import static com.example.nekitenzogmailcom.hookahtimer.R.layout.notification_action;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,14 +40,19 @@ public class MainActivity extends AppCompatActivity {
     boolean starter9;
     boolean starter10;
     Vibrator vibrator;
-
+    Intent intent;
+    public long elapsedMillis1,sec1,min1,hours1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        startService(new Intent(this, HookahService.class));
+       // startService(new Intent(this, HookahService.class));
         super.onCreate(savedInstanceState);
         setContentView(activity_main);
         nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        startService(new Intent(this, HookahService.class));
+
         starter1 = false;
         starter2 = false;
         starter3 = false;
@@ -121,13 +125,11 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         final CheckBox check2Tbl10 = (CheckBox)findViewById(R.id.check2Tbl10);
         final CheckBox check3Tbl10 = (CheckBox)findViewById(R.id.check3Tbl10);
 
-
-
+        //startService(new Intent(this, HookahService.class));
 
 
         start1.setOnClickListener(new View.OnClickListener() {
-            long elapsedMillis1;
-
+       //  long elapsedMillis1,sec1,min1,hours1;
             // long elapsedMillis = SystemClock.elapsedRealtime() - chronometer9.getBase();
             @Override
             public void onClick(View view){
@@ -135,15 +137,18 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                     chronometer1.setBase(SystemClock.elapsedRealtime());
                     chronometer1.start();
                     start1.setText("Сброс!");
-                    start1.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.red));
+                //    start1.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.red));
+                    start1.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.stop_buttons));
                     starter1 = true;
 
                     chronometer1.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
                         @Override
                         public void onChronometerTick(Chronometer chronometer) {
                             elapsedMillis1 = SystemClock.elapsedRealtime()- chronometer1.getBase();
+                            sec1 = elapsedMillis1/1000;
+                            min1 = elapsedMillis1/60000;
+                            hours1 = elapsedMillis1/3600000;
 
-                             if (elapsedMillis1 > 3000 && elapsedMillis1 < 5000) {
 
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 Notification.Builder builder = new Notification.Builder(getApplicationContext());
@@ -155,12 +160,13 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                                         .setTicker("Первый стол")
                                         .setWhen(System.currentTimeMillis())
                                         .setAutoCancel(true)
-                                        .setContentTitle("Первая смена (20 мин)")
-                                        .setContentText("оглы блед");
+                                        .setContentTitle("Первый стол" )
+                                       // .setContentText("Время с посадки(чч:мм) = " + elapsedMillis1/3600000 + ":" + elapsedMillis1/60000);
+                                        .setContentText("Время с посадки(ч:м) = " + hours1 + ":" + min1 +  ":" + sec1);
                                 Notification notification = builder.build();
                                 nm.notify(NOTIFICATION_ID, notification);
 
-                             }
+
 //                            if (elapsedMillis1 > 2000 && elapsedMillis1 < 7000) {
 //                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 //                                Notification.Builder builder = new Notification.Builder(getApplicationContext());
@@ -176,13 +182,26 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 //                                        .setContentText("оглы блед");
 //                                Notification notification = builder.build();
 //                                nm.notify(NOTIFICATION_ID, notification);
-//
+
 //                            }
+                            if (elapsedMillis1 > 4000 && elapsedMillis1 < 7000) {
+                                    String strElapsedMillis = "Первая смена углей 9 стола!";
+                                    Toast.makeText(getApplicationContext(), strElapsedMillis, Toast.LENGTH_LONG).show();
+                                     vibrator.vibrate(2000);
+
+                                }
                         }
+
+
+
+
+
+
                     });
+
                 }
                 else {
-
+                    nm.cancel(127);
                     check1Tbl1.setChecked(false);
                     check2Tbl1.setChecked(false);
                     check3Tbl1.setChecked(false);
@@ -192,7 +211,9 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                     start1.setText("Посадка");
                     chronometer1.setBase(SystemClock.elapsedRealtime());
                     chronometer1.stop();
-                    start1.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.green));
+
+               //     start1.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.green));
+                    start1.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.start_button));
                     starter1 = false;
                 }
                 check1Tbl1.setOnClickListener(new View.OnClickListener() {
@@ -211,9 +232,13 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                     @Override
                     public void onClick(View view) {
                         check3Tbl1.setText("Третья смена в: " + (elapsedMillis1 /60000) + " мин");
+
                     }
                 });
             }
+
+
+
         });
 
 
@@ -834,11 +859,34 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
             }
         });
 
+
+
+
     }
 public void startService(View view){
-Intent intent = new  Intent(this,HookahService.class);
-   startService(intent);
+intent = new  Intent(this,HookahService.class);
+    intent.putExtra("FirstTimer",elapsedMillis1);
+
 }
 
 
+
+
+
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

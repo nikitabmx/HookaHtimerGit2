@@ -4,10 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
     <color name="green">#74e674</color>
+    <color name="supergreen">#61BC43</color>
     <color name="red">#FFFF7640</color>
     <color name="white">#f9e6e6</color>
-    <color name="superred">#FB2E01</color>
+    <color name="superred">#CC0000</color>
     <color name="black">#272322</color>
+
 
 
 
