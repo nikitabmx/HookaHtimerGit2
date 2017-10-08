@@ -127,6 +127,7 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
 
         start1.setOnClickListener(new View.OnClickListener() {
+
        //  long elapsedMillis1,sec1,min1,hours1;
             // long elapsedMillis = SystemClock.elapsedRealtime() - chronometer9.getBase();
             @Override
