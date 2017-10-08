@@ -1,13 +1,10 @@
 package com.example.nekitenzogmailcom.hookahtimer;
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ComponentName;
+
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.os.PersistableBundle;
+
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
@@ -20,10 +17,10 @@ import android.widget.Chronometer;
 import android.widget.Toast;
 
 
-import java.lang.reflect.Array;
+
 
 import static com.example.nekitenzogmailcom.hookahtimer.R.layout.activity_main;
-import static com.example.nekitenzogmailcom.hookahtimer.R.layout.notification_action;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,18 +37,19 @@ public class MainActivity extends AppCompatActivity {
     boolean starter9;
     boolean starter10;
     Vibrator vibrator;
+    String kek;
     Intent intent;
-    public long elapsedMillis1,sec1,min1,hours1;
+    public long elapsedMillis1,elapsedMillis2,sec1,min1,hours1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       // startService(new Intent(this, HookahService.class));
+
         super.onCreate(savedInstanceState);
         setContentView(activity_main);
         nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
 
-        startService(new Intent(this, HookahService.class));
+kek = "кек";
 
         starter1 = false;
         starter2 = false;
@@ -133,7 +131,9 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
             // long elapsedMillis = SystemClock.elapsedRealtime() - chronometer9.getBase();
             @Override
             public void onClick(View view){
-                if (!starter1) {
+                if (!starter1){
+
+                    startService(new Intent(MainActivity.this, HookahService.class));
                     chronometer1.setBase(SystemClock.elapsedRealtime());
                     chronometer1.start();
                     start1.setText("Сброс!");
@@ -150,21 +150,22 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                             hours1 = elapsedMillis1/3600000;
 
 
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                Notification.Builder builder = new Notification.Builder(getApplicationContext());
-                                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0 ,intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                                builder
-                                        .setContentIntent(pendingIntent)
-                                        .setSmallIcon(R.mipmap.icon)
-                                        .setLargeIcon(BitmapFactory.decodeResource(getApplication().getResources(), R.mipmap.icon))
-                                        .setTicker("Первый стол")
-                                        .setWhen(System.currentTimeMillis())
-                                        .setAutoCancel(true)
-                                        .setContentTitle("Первый стол" )
-                                       // .setContentText("Время с посадки(чч:мм) = " + elapsedMillis1/3600000 + ":" + elapsedMillis1/60000);
-                                        .setContentText("Время с посадки(ч:м) = " + hours1 + ":" + min1 +  ":" + sec1);
-                                Notification notification = builder.build();
-                                nm.notify(NOTIFICATION_ID, notification);
+
+//                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                                Notification.Builder builder = new Notification.Builder(getApplicationContext());
+//                                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0 ,intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//                                builder
+//                                        .setContentIntent(pendingIntent)
+//                                        .setSmallIcon(R.mipmap.icon)
+//                                        .setLargeIcon(BitmapFactory.decodeResource(getApplication().getResources(), R.mipmap.icon))
+//                                        .setTicker("Первый стол")
+//                                        .setWhen(System.currentTimeMillis())
+//                                        .setAutoCancel(true)
+//                                        .setContentTitle("Первый стол" )
+//                                       // .setContentText("Время с посадки(чч:мм) = " + elapsedMillis1/3600000 + ":" + elapsedMillis1/60000);
+//                                        .setContentText("Время с посадки(ч:м) = " + hours1 + ":" + min1 +  ":" + sec1);
+//                                Notification notification = builder.build();
+//                                nm.notify(NOTIFICATION_ID, notification);
 
 
 //                            if (elapsedMillis1 > 2000 && elapsedMillis1 < 7000) {
@@ -187,7 +188,7 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                             if (elapsedMillis1 > 4000 && elapsedMillis1 < 7000) {
                                     String strElapsedMillis = "Первая смена углей 9 стола!";
                                     Toast.makeText(getApplicationContext(), strElapsedMillis, Toast.LENGTH_LONG).show();
-                                     vibrator.vibrate(2000);
+                                  //   vibrator.vibrate(2000);
 
                                 }
                         }
@@ -863,10 +864,11 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
 
     }
-public void startService(View view){
-intent = new  Intent(this,HookahService.class);
-    intent.putExtra("FirstTimer",elapsedMillis1);
 
+public void startService(View view){
+//intent = new  Intent(this,HookahService.class);
+    intent.putExtra("FirstTimer",elapsedMillis2);
+    intent.putExtra("kek",kek);
 }
 
 
@@ -883,6 +885,7 @@ intent = new  Intent(this,HookahService.class);
 
 
     }
+
 
 
     @Override
