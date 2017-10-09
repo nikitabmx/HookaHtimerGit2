@@ -191,10 +191,10 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), strElapsedMillis, Toast.LENGTH_LONG).show();
                                   //   vibrator.vibrate(2000);
 
-
+                                startService(intentService);
 
                                 }
-                            startService(intentService);
+
                         }
 
 
