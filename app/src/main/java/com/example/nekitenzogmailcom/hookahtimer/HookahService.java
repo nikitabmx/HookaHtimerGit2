@@ -7,13 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
-import android.media.audiofx.BassBoost;
 import android.os.IBinder;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.widget.Toast;
 
-import static android.provider.Settings.System.DEFAULT_ALARM_ALERT_URI;
+
 
 
 /**
@@ -22,9 +20,8 @@ import static android.provider.Settings.System.DEFAULT_ALARM_ALERT_URI;
 
 public class HookahService extends Service
 {
-    Intent intent;
-    long chronom;
-  String kek;
+
+
  public final int NOTIFICATION_ID = 127;
      NotificationManager nm;
 
@@ -46,8 +43,8 @@ public class HookahService extends Service
         media = MediaPlayer.create(this,Settings.System.DEFAULT_ALARM_ALERT_URI);
         media.setLooping(true);
       //  media.start();
-     // chronom  = intent.getLongExtra("FirstTimer", 0);
-     kek  = intent.getStringExtra("kek");
+        long chronom  = intent.getLongExtra("FirstTimer", 0);
+    String kek  = intent.getStringExtra("kekes");
         Toast.makeText(getApplicationContext(),("сервис блед робит " + kek) ,Toast.LENGTH_LONG).show();
 
 
@@ -64,8 +61,8 @@ public class HookahService extends Service
                     .setWhen(System.currentTimeMillis())
                     .setAutoCancel(true)
                     .setContentTitle("Первый стол")
-                    .setContentText("Время с посадки(чч:мм) = " + kek);
-            // .setContentText("Время с посадки(ч:м) = " + hours1 + ":" + min1 +  ":" + sec1);
+                  //  .setContentText("Время с посадки(чч:мм) = " + kek)
+            .setContentText("Время с посадки(ч:м) = " + chronom);
             Notification notification = builder.build();
             nm.notify(NOTIFICATION_ID, notification);
 

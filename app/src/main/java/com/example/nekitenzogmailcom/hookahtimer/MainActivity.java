@@ -25,7 +25,6 @@ import static com.example.nekitenzogmailcom.hookahtimer.R.layout.activity_main;
 
 public class MainActivity extends AppCompatActivity {
     private NotificationManager nm;
-    private final int NOTIFICATION_ID = 127;
     boolean starter1;
     boolean starter2;
     boolean starter3;
@@ -134,7 +133,7 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
             public void onClick(View view){
                 if (!starter1){
 
-                    startService(new Intent(MainActivity.this, HookahService.class));
+                     startService(new Intent(MainActivity.this, HookahService.class));
                     chronometer1.setBase(SystemClock.elapsedRealtime());
                     chronometer1.start();
                     start1.setText("Сброс!");
@@ -867,9 +866,10 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
     }
 
 public void startService(View view){
-//intent = new  Intent(this,HookahService.class);
+
+intent = new  Intent(this,HookahService.class);
     intent.putExtra("FirstTimer",elapsedMillis2);
-    intent.putExtra("kek",kek);
+    intent.putExtra("kekes",kek);
 }
 
 
