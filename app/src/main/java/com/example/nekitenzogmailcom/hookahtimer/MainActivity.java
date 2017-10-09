@@ -190,9 +190,11 @@ public class MainActivity extends AppCompatActivity {
                                     String strElapsedMillis = "Первая смена углей 9 стола!";
                                     Toast.makeText(getApplicationContext(), strElapsedMillis, Toast.LENGTH_LONG).show();
                                   //   vibrator.vibrate(2000);
-                                startService(intentService);
-                                }
 
+
+
+                                }
+                            startService(intentService);
                         }
 
 
