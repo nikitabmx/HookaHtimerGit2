@@ -44,7 +44,7 @@ public class HookahService extends Service
         media.setLooping(true);
       //  media.start();
         long chronom  = intent.getLongExtra("FirstTimer", 0);
-    String kek  = intent.getStringExtra("kekes");
+    String kek  = intent.getStringExtra("kek");
         Toast.makeText(getApplicationContext(),("сервис блед робит " + kek) ,Toast.LENGTH_LONG).show();
 
 
@@ -61,8 +61,7 @@ public class HookahService extends Service
                     .setWhen(System.currentTimeMillis())
                     .setAutoCancel(true)
                     .setContentTitle("Первый стол")
-                  //  .setContentText("Время с посадки(чч:мм) = " + kek)
-            .setContentText("Время с посадки(ч:м) = " + chronom);
+            .setContentText("Время с посадки(ч:м) = " + chronom + " " + kek);
             Notification notification = builder.build();
             nm.notify(NOTIFICATION_ID, notification);
 

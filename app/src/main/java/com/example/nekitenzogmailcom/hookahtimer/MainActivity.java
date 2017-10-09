@@ -2,6 +2,7 @@ package com.example.nekitenzogmailcom.hookahtimer;
 
 import android.app.NotificationManager;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     Vibrator vibrator;
     String kek;
     Intent intent;
+    Intent intentService;
     public long elapsedMillis1,elapsedMillis2,sec1,min1,hours1;
 
     @Override
@@ -48,7 +50,11 @@ public class MainActivity extends AppCompatActivity {
         nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
 
-kek = "кек";
+        prepairIntent();
+//        startService(intent);
+
+
+        kek = "кек";
 
         starter1 = false;
         starter2 = false;
@@ -60,8 +66,8 @@ kek = "кек";
         starter8 = false;
         starter9 = false;
         starter10 = false;
-vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-         final Chronometer chronometer1 = (Chronometer) findViewById(R.id.chronometer1);
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        final Chronometer chronometer1 = (Chronometer) findViewById(R.id.chronometer1);
         final Chronometer chronometer2 = (Chronometer) findViewById(R.id.chronometer2);
         final Chronometer chronometer3 = (Chronometer) findViewById(R.id.chronometer3);
         final Chronometer chronometer4 = (Chronometer) findViewById(R.id.chronometer4);
@@ -71,32 +77,32 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         final Chronometer chronometer8 = (Chronometer) findViewById(R.id.chronometer8);
         final Chronometer chronometer9 = (Chronometer) findViewById(R.id.chronometer9);
         final Chronometer chronometer10 = (Chronometer) findViewById(R.id.chronometer10);
-     final Button start1 = (Button) findViewById(R.id.StrBtn1);
-     final Button start2 = (Button) findViewById(R.id.StrBtn2);
-     final Button start3 = (Button) findViewById(R.id.StrBtn3);
-     final Button start4 = (Button) findViewById(R.id.StrBtn4);
-     final Button start5 = (Button) findViewById(R.id.StrBtn5);
-     final Button start6 = (Button) findViewById(R.id.StrBtn6);
-     final Button start7 = (Button) findViewById(R.id.StrBtn7);
-     final Button start8 = (Button) findViewById(R.id.StrBtn8);
-     final Button start9 = (Button) findViewById(R.id.StrBtn9);
-     final Button start10 = (Button) findViewById(R.id.StrBtn10);
+        final Button start1 = (Button) findViewById(R.id.StrBtn1);
+        final Button start2 = (Button) findViewById(R.id.StrBtn2);
+        final Button start3 = (Button) findViewById(R.id.StrBtn3);
+        final Button start4 = (Button) findViewById(R.id.StrBtn4);
+        final Button start5 = (Button) findViewById(R.id.StrBtn5);
+        final Button start6 = (Button) findViewById(R.id.StrBtn6);
+        final Button start7 = (Button) findViewById(R.id.StrBtn7);
+        final Button start8 = (Button) findViewById(R.id.StrBtn8);
+        final Button start9 = (Button) findViewById(R.id.StrBtn9);
+        final Button start10 = (Button) findViewById(R.id.StrBtn10);
 
-    final CheckBox check1Tbl1 = (CheckBox)findViewById(R.id.check1Tbl1);
-      final CheckBox check2Tbl1 = (CheckBox)findViewById(R.id.check2Tbl1);
-      final CheckBox check3Tbl1 = (CheckBox)findViewById(R.id.check3Tbl1);
+        final CheckBox check1Tbl1 = (CheckBox)findViewById(R.id.check1Tbl1);
+        final CheckBox check2Tbl1 = (CheckBox)findViewById(R.id.check2Tbl1);
+        final CheckBox check3Tbl1 = (CheckBox)findViewById(R.id.check3Tbl1);
 
-      final CheckBox check1Tbl2 = (CheckBox)findViewById(R.id.check1Tbl2);
-      final CheckBox check2Tbl2 = (CheckBox)findViewById(R.id.check2Tbl2);
-      final CheckBox check3Tbl2 = (CheckBox)findViewById(R.id.check3Tbl2);
+        final CheckBox check1Tbl2 = (CheckBox)findViewById(R.id.check1Tbl2);
+        final CheckBox check2Tbl2 = (CheckBox)findViewById(R.id.check2Tbl2);
+        final CheckBox check3Tbl2 = (CheckBox)findViewById(R.id.check3Tbl2);
 
         final CheckBox check1Tbl3 = (CheckBox)findViewById(R.id.check1Tbl3);
-      final CheckBox check2Tbl3 = (CheckBox)findViewById(R.id.check2Tbl3);
-      final CheckBox check3Tbl3 = (CheckBox)findViewById(R.id.check3Tbl3);
+        final CheckBox check2Tbl3 = (CheckBox)findViewById(R.id.check2Tbl3);
+        final CheckBox check3Tbl3 = (CheckBox)findViewById(R.id.check3Tbl3);
 
         final CheckBox check1Tbl4 = (CheckBox)findViewById(R.id.check1Tbl4);
-      final CheckBox check2Tbl4 = (CheckBox)findViewById(R.id.check2Tbl4);
-      final CheckBox check3Tbl4 = (CheckBox)findViewById(R.id.check3Tbl4);
+        final CheckBox check2Tbl4 = (CheckBox)findViewById(R.id.check2Tbl4);
+        final CheckBox check3Tbl4 = (CheckBox)findViewById(R.id.check3Tbl4);
 
         final CheckBox check1Tbl5 = (CheckBox)findViewById(R.id.check1Tbl5);
         final CheckBox check2Tbl5 = (CheckBox)findViewById(R.id.check2Tbl5);
@@ -132,8 +138,10 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
             @Override
             public void onClick(View view){
                 if (!starter1){
+                    startService(intentService);
 
-                     startService(new Intent(MainActivity.this, HookahService.class));
+                   //  startService(new Intent(MainActivity.this, HookahService.class));
+                    // startService(new Intent(MainActivity.this, HookahService.class));
                     chronometer1.setBase(SystemClock.elapsedRealtime());
                     chronometer1.start();
                     start1.setText("Сброс!");
@@ -865,19 +873,17 @@ vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
     }
 
-public void startService(View view){
-
-intent = new  Intent(this,HookahService.class);
-    intent.putExtra("FirstTimer",elapsedMillis2);
-    intent.putExtra("kekes",kek);
-}
-
-
-
-
-
-
-
+//public void startService(View view){
+//
+//intent =  Intent(this,HookahService.class);
+//    intent.putExtra("FirstTimer",elapsedMillis2);
+//    intent.putExtra("kekes",kek);
+//}
+    public void prepairIntent(){
+        intentService = new Intent(this,HookahService.class);
+        intentService.putExtra("FirstTimer",elapsedMillis2);
+        intentService.putExtra("kek",kek);
+    }
 
     @Override
     protected void onPause() {
