@@ -1,11 +1,8 @@
 package com.example.nekitenzogmailcom.hookahtimer;
 
 import android.app.NotificationManager;
-
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
@@ -37,10 +34,9 @@ public class MainActivity extends AppCompatActivity {
     boolean starter9;
     boolean starter10;
     Vibrator vibrator;
-    String kek;
-    Intent intent;
+
     Intent intentService;
-    public long elapsedMillis1,elapsedMillis2,sec1,min1,hours1;
+    public long elapsedMillis1,sec1,min1,hours1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         prepairIntent();
-//        startService(intent);
 
 
-        kek = "кек";
+
 
         starter1 = false;
         starter2 = false;
@@ -127,18 +122,16 @@ public class MainActivity extends AppCompatActivity {
         final CheckBox check1Tbl10 = (CheckBox)findViewById(R.id.check1Tbl10);
         final CheckBox check2Tbl10 = (CheckBox)findViewById(R.id.check2Tbl10);
         final CheckBox check3Tbl10 = (CheckBox)findViewById(R.id.check3Tbl10);
-
-        //startService(new Intent(this, HookahService.class));
-
-
+//-----------------------------------------------------------------------------
         start1.setOnClickListener(new View.OnClickListener() {
 
        //  long elapsedMillis1,sec1,min1,hours1;
             // long elapsedMillis = SystemClock.elapsedRealtime() - chronometer9.getBase();
             @Override
             public void onClick(View view){
+
                 if (!starter1){
-                    startService(intentService);
+
 
                    //  startService(new Intent(MainActivity.this, HookahService.class));
                     // startService(new Intent(MainActivity.this, HookahService.class));
@@ -197,8 +190,9 @@ public class MainActivity extends AppCompatActivity {
                                     String strElapsedMillis = "Первая смена углей 9 стола!";
                                     Toast.makeText(getApplicationContext(), strElapsedMillis, Toast.LENGTH_LONG).show();
                                   //   vibrator.vibrate(2000);
-
+                                startService(intentService);
                                 }
+
                         }
 
 
@@ -880,8 +874,10 @@ public class MainActivity extends AppCompatActivity {
 //    intent.putExtra("kekes",kek);
 //}
     public void prepairIntent(){
-        intentService = new Intent(this,HookahService.class);
-        intentService.putExtra("FirstTimer",elapsedMillis2);
+        String kek = "kekes";
+        long kek1 = elapsedMillis1;
+        intentService = (new Intent(this,HookahService.class));
+        intentService.putExtra("FirstTimer",kek1);
         intentService.putExtra("kek",kek);
     }
 

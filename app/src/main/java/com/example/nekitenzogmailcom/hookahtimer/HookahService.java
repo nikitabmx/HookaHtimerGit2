@@ -7,11 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.widget.Toast;
 
-
+import java.util.Timer;
 
 
 /**
@@ -24,8 +25,8 @@ public class HookahService extends Service
 
  public final int NOTIFICATION_ID = 127;
      NotificationManager nm;
-
-  MediaPlayer media;
+    // long kek1;
+     MediaPlayer media;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -43,7 +44,7 @@ public class HookahService extends Service
         media = MediaPlayer.create(this,Settings.System.DEFAULT_ALARM_ALERT_URI);
         media.setLooping(true);
       //  media.start();
-        long chronom  = intent.getLongExtra("FirstTimer", 0);
+        long chronom  = intent.getLongExtra("FirstTimer", 1L);
     String kek  = intent.getStringExtra("kek");
         Toast.makeText(getApplicationContext(),("сервис блед робит " + kek) ,Toast.LENGTH_LONG).show();
 
