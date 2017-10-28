@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     Intent intentService;
     public long elapsedMillis1,sec1,min1,hours1;
+    int starting1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
 
-        prepairIntent();
+
 
 
 
@@ -131,13 +132,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view){
 
                 if (!starter1){
-
-
+                    chronometer1.setBase(SystemClock.elapsedRealtime());
+                    start1.setText("Сброс!");
+                    chronometer1.start();
+                    prepairIntent();
+                    starting1 = 1;
+                    startService(intentService);
                    //  startService(new Intent(MainActivity.this, HookahService.class));
                     // startService(new Intent(MainActivity.this, HookahService.class));
-                    chronometer1.setBase(SystemClock.elapsedRealtime());
-                    chronometer1.start();
-                    start1.setText("Сброс!");
+
                 //    start1.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.red));
                     start1.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.stop_buttons));
                     starter1 = true;
@@ -149,51 +152,18 @@ public class MainActivity extends AppCompatActivity {
                             sec1 = elapsedMillis1/1000;
                             min1 = elapsedMillis1/60000;
                             hours1 = elapsedMillis1/3600000;
+                            intentService.putExtra("FirstTimer",kek1);
 
 
 
-//                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                                Notification.Builder builder = new Notification.Builder(getApplicationContext());
-//                                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0 ,intent, PendingIntent.FLAG_CANCEL_CURRENT);
-//                                builder
-//                                        .setContentIntent(pendingIntent)
-//                                        .setSmallIcon(R.mipmap.icon)
-//                                        .setLargeIcon(BitmapFactory.decodeResource(getApplication().getResources(), R.mipmap.icon))
-//                                        .setTicker("Первый стол")
-//                                        .setWhen(System.currentTimeMillis())
-//                                        .setAutoCancel(true)
-//                                        .setContentTitle("Первый стол" )
-//                                       // .setContentText("Время с посадки(чч:мм) = " + elapsedMillis1/3600000 + ":" + elapsedMillis1/60000);
-//                                        .setContentText("Время с посадки(ч:м) = " + hours1 + ":" + min1 +  ":" + sec1);
-//                                Notification notification = builder.build();
-//                                nm.notify(NOTIFICATION_ID, notification);
-
-
-//                            if (elapsedMillis1 > 2000 && elapsedMillis1 < 7000) {
-//                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                                Notification.Builder builder = new Notification.Builder(getApplicationContext());
-//                                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0 ,intent, PendingIntent.FLAG_CANCEL_CURRENT);
-//                                builder
-//                                        .setContentIntent(pendingIntent)
-//                                        .setSmallIcon(R.mipmap.icon)
-//                                        .setLargeIcon(BitmapFactory.decodeResource(getApplication().getResources(), R.mipmap.icon))
-//                                        .setTicker("Первый стол")
-//                                        .setWhen(System.currentTimeMillis())
-//                                        .setAutoCancel(true)
-//                                        .setContentTitle("Первая смена (20 мин)")
-//                                        .setContentText("оглы блед");
-//                                Notification notification = builder.build();
-//                                nm.notify(NOTIFICATION_ID, notification);
-
-//                            }
                             if (elapsedMillis1 > 4000 && elapsedMillis1 < 7000) {
                                     String strElapsedMillis = "Первая смена углей 9 стола!";
                                     Toast.makeText(getApplicationContext(), strElapsedMillis, Toast.LENGTH_LONG).show();
                                   //   vibrator.vibrate(2000);
 
-                                startService(intentService);
 
                                 }
+
 
                         }
 
@@ -875,12 +845,15 @@ public class MainActivity extends AppCompatActivity {
 //    intent.putExtra("FirstTimer",elapsedMillis2);
 //    intent.putExtra("kekes",kek);
 //}
+
+long kek1 = elapsedMillis1;
     public void prepairIntent(){
         String kek = "kekes";
-        long kek1 = elapsedMillis1;
-        intentService = (new Intent(this,HookahService.class));
-        intentService.putExtra("FirstTimer",kek1);
+
+        intentService = new Intent(this,HookahService.class);
+        //intentService.putExtra("FirstTimer",kek1);
         intentService.putExtra("kek",kek);
+        intentService.putExtra("bolshit1",starting1);
     }
 
     @Override
