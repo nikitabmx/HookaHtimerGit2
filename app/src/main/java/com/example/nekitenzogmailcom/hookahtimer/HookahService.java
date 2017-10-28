@@ -54,7 +54,7 @@ public class HookahService extends Service {
 
         String kek = intent.getStringExtra("kek");
         boolshit1 = intent.getIntExtra("bolshit1",1);
-        Toast.makeText(getApplicationContext(), ("сервис блед робит " + kek), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), ("сервис бле робит " + kek), Toast.LENGTH_LONG).show();
 
 
         new Intent(getApplicationContext(), HookahService.class);
