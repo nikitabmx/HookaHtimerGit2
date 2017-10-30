@@ -68,7 +68,7 @@ public class HookahService extends Service {
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
                 .setContentTitle("Первый стол")
-                .setContentText("Время с посаки(ч:м) = " + " "+ timer1 );
+                .setContentText("Время с посаки(ч:мм) = " + " "+ timer1 );
         Notification notification = builder.build();
         nm.notify(NOTIFICATION_ID, notification);
 
