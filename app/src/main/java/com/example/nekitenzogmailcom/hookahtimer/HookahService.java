@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 
+import android.os.Build;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.widget.Chronometer;
 import android.widget.Toast;
 
@@ -27,14 +29,12 @@ import java.util.TimerTask;
 
 public class HookahService extends Service {
     String strDate;
-    Timer timer;
-    MyTimerTask mMyTimerTask;
     int boolshit1;
-
+    long timer1;
+    long timer12;
     public final int NOTIFICATION_ID = 127;
     NotificationManager nm;
-    // long kek1;
-    MediaPlayer media;
+
 
     @Override
     public void onCreate() {
@@ -45,11 +45,11 @@ public class HookahService extends Service {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         OnSomeTask();
-        media = MediaPlayer.create(this, Settings.System.DEFAULT_ALARM_ALERT_URI);
-        media.setLooping(true);
+
 
 
         String kek = intent.getStringExtra("kek");
@@ -68,7 +68,7 @@ public class HookahService extends Service {
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
                 .setContentTitle("Первый стол")
-                .setContentText("Время с посаки(ч:м) = " + " "+ strDate);
+                .setContentText("Время с посаки(ч:м) = " + " "+ timer1 );
         Notification notification = builder.build();
         nm.notify(NOTIFICATION_ID, notification);
 
@@ -79,39 +79,18 @@ public class HookahService extends Service {
     }
 
     public void OnSomeTask() {
+        Timer timer;
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
 
-
-        if (boolshit1 == 1) {
-            if (timer != null) {
-                timer = new Timer();
-                mMyTimerTask = new MyTimerTask();
-                timer.schedule(mMyTimerTask, 1000);
-            } else {
-                timer.schedule(mMyTimerTask, 1000, 5000);
+                timer12 += 1000;
+                timer1 = timer12;
             }
-        } else {
-            timer.cancel();
-            timer = null;
-        }
-
+        },0,1000);
     }
 
-
-public class MyTimerTask extends TimerTask {
-
-
-        @Override
-        public void run() {
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
-            strDate = simpleDateFormat.format(calendar.getTime());
-//            runOnUiThread(new Runnable());
-//            {
-//                run();
-//            }
-        }
-
-    }
         @Override
         public IBinder onBind(Intent intent) {
             Toast.makeText(getApplicationContext(), ("сервис блед onBIND"), Toast.LENGTH_SHORT).show();
