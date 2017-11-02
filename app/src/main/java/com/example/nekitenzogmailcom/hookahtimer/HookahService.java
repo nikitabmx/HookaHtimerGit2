@@ -37,13 +37,13 @@ public class HookahService extends Service {
     Notification notification;
     Notification.Builder builder;
     PendingIntent pendingIntent;
-
+Intent notyfyIntent;
     @Override
     public void onCreate() {
         super.onCreate();
 
         nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-
+        builder = new Notification.Builder(getApplicationContext());
 
     }
 
@@ -57,11 +57,11 @@ public class HookahService extends Service {
         String kek = intent.getStringExtra("kek");
         boolshit1 = intent.getIntExtra("bolshit1",1);
         Toast.makeText(getApplicationContext(), ("сервис бле робит " + kek), Toast.LENGTH_LONG).show();
+        nm.notify(NOTIFICATION_ID, notification);
 
-
-        new Intent(getApplicationContext(), HookahService.class);
+        notyfyIntent = new Intent(getApplicationContext(), HookahService.class);
         //Notification.Builder builder = new Notification.Builder(getApplicationContext());
-         pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+         PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 //        builder
 //                .setContentIntent(pendingIntent)
 //                .setSmallIcon(R.mipmap.icon)
@@ -72,7 +72,7 @@ public class HookahService extends Service {
 //                .setContentTitle("Первый стол")
 //                .setContentText("Время с посаки(ч:мм) = " + " "+ timer1 );
 //        Notification notification = builder.build();
-        nm.notify(NOTIFICATION_ID, notification);
+
 
         // Toast.makeText(getApplicationContext(), ("сервис блед робит " + chronom), Toast.LENGTH_LONG).show();
 
@@ -87,7 +87,7 @@ public class HookahService extends Service {
             @Override
             public void run() {
 
-                timer12 += 1000;
+                timer12 += 1;
 
                 kek(timer12);
 
@@ -102,7 +102,7 @@ public class HookahService extends Service {
 
         }
         public void kek(long timer12){
-            builder = new Notification.Builder(getApplicationContext());
+
             builder
                     .setContentIntent(pendingIntent)
                     .setSmallIcon(R.mipmap.icon)
