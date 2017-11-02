@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HookaHtimer.iml" filepath="$PROJECT_DIR$/HookaHtimer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/HookaHtimerGit2.iml" filepath="$PROJECT_DIR$/HookaHtimerGit2.iml" />
+      <module fileurl="file://C:\Users\nekit\AndroidStudioProjects\HookaHtimer\HookaHtimerGit2.iml" filepath="C:\Users\nekit\AndroidStudioProjects\HookaHtimer\HookaHtimerGit2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -28,13 +28,15 @@ import java.util.TimerTask;
  */
 
 public class HookahService extends Service {
-    String strDate;
-    int boolshit1;
-    long timer1;
-    long timer12;
-    public final int NOTIFICATION_ID = 127;
-    NotificationManager nm;
 
+    int boolshit1;
+
+    long timer12;
+    public int NOTIFICATION_ID = 127;
+    NotificationManager nm;
+    Notification notification;
+    Notification.Builder builder;
+    PendingIntent pendingIntent;
 
     @Override
     public void onCreate() {
@@ -58,18 +60,18 @@ public class HookahService extends Service {
 
 
         new Intent(getApplicationContext(), HookahService.class);
-        Notification.Builder builder = new Notification.Builder(getApplicationContext());
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        builder
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.mipmap.icon)
-                .setLargeIcon(BitmapFactory.decodeResource(getApplication().getResources(), R.mipmap.icon))
-                .setTicker("Первый стол")
-                .setWhen(System.currentTimeMillis())
-                .setAutoCancel(true)
-                .setContentTitle("Первый стол")
-                .setContentText("Время с посаки(ч:мм) = " + " "+ timer1 );
-        Notification notification = builder.build();
+        //Notification.Builder builder = new Notification.Builder(getApplicationContext());
+         pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//        builder
+//                .setContentIntent(pendingIntent)
+//                .setSmallIcon(R.mipmap.icon)
+//                .setLargeIcon(BitmapFactory.decodeResource(getApplication().getResources(), R.mipmap.icon))
+//                .setTicker("Первый стол")
+//                .setWhen(System.currentTimeMillis())
+//                .setAutoCancel(true)
+//                .setContentTitle("Первый стол")
+//                .setContentText("Время с посаки(ч:мм) = " + " "+ timer1 );
+//        Notification notification = builder.build();
         nm.notify(NOTIFICATION_ID, notification);
 
         // Toast.makeText(getApplicationContext(), ("сервис блед робит " + chronom), Toast.LENGTH_LONG).show();
@@ -86,7 +88,9 @@ public class HookahService extends Service {
             public void run() {
 
                 timer12 += 1000;
-                timer1 = timer12;
+
+                kek(timer12);
+
             }
         },0,1000);
     }
@@ -95,6 +99,20 @@ public class HookahService extends Service {
         public IBinder onBind(Intent intent) {
             Toast.makeText(getApplicationContext(), ("сервис блед onBIND"), Toast.LENGTH_SHORT).show();
             return null;
+
+        }
+        public void kek(long timer12){
+            builder = new Notification.Builder(getApplicationContext());
+            builder
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(R.mipmap.icon)
+                    .setLargeIcon(BitmapFactory.decodeResource(getApplication().getResources(), R.mipmap.icon))
+                    .setTicker("Первый стол")
+                   // .setWhen(System.currentTimeMillis())
+                    .setAutoCancel(true)
+                    .setContentTitle("Первый стол")
+                    .setContentText("Время с посаки(ч:мм) = " + " "+ timer12 );
+            notification = builder.build();
 
         }
 
