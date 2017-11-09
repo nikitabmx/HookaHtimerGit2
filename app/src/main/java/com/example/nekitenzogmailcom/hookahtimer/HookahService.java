@@ -6,19 +6,14 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
-
 import android.os.Build;
 import android.os.IBinder;
-import android.os.SystemClock;
-import android.provider.Settings;
+import android.os.Vibrator;
 import android.support.annotation.RequiresApi;
-import android.widget.Chronometer;
+
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,16 +23,19 @@ import java.util.TimerTask;
  */
 
 public class HookahService extends Service {
+    Timer timer;
 
-    int boolshit1;
-
-    long timer12;
+    String kekes;
+    boolean starter1;
+    Vibrator vibrator;
+    long timer12,kek1,timer1s,timer1m,timer1h;
     public int NOTIFICATION_ID = 127;
     NotificationManager nm;
     Notification notification;
     Notification.Builder builder;
     PendingIntent pendingIntent;
-Intent notyfyIntent;
+    Intent notyfyIntent;
+    boolean boolshit1;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -50,71 +48,73 @@ Intent notyfyIntent;
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        OnSomeTask();
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+         boolshit1 = intent.getBooleanExtra("starter1",true);
+         kek1 = intent.getLongExtra("FirstTimer",1);
+        kekes = intent.getStringExtra("kek");
 
 
-
-        String kek = intent.getStringExtra("kek");
-        boolshit1 = intent.getIntExtra("bolshit1",1);
-        Toast.makeText(getApplicationContext(), ("сервис бле робит " + kek), Toast.LENGTH_LONG).show();
-        nm.notify(NOTIFICATION_ID, notification);
-
+        Toast.makeText(getApplicationContext(), ("сервис бле робит " + kekes ), Toast.LENGTH_LONG).show();
         notyfyIntent = new Intent(getApplicationContext(), HookahService.class);
-        //Notification.Builder builder = new Notification.Builder(getApplicationContext());
          PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-//        builder
-//                .setContentIntent(pendingIntent)
-//                .setSmallIcon(R.mipmap.icon)
-//                .setLargeIcon(BitmapFactory.decodeResource(getApplication().getResources(), R.mipmap.icon))
-//                .setTicker("Первый стол")
-//                .setWhen(System.currentTimeMillis())
-//                .setAutoCancel(true)
-//                .setContentTitle("Первый стол")
-//                .setContentText("Время с посаки(ч:мм) = " + " "+ timer1 );
-//        Notification notification = builder.build();
 
 
-        // Toast.makeText(getApplicationContext(), ("сервис блед робит " + chronom), Toast.LENGTH_LONG).show();
-
-
+        OnSomeTask();
         return START_STICKY;
     }
 
     public void OnSomeTask() {
-        Timer timer;
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
+        if (boolshit1) {
 
-                timer12 += 1;
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
 
-                kek(timer12);
+                    timer12 += 1;
+                    kek(timer12);
 
-            }
-        },0,1000);
+
+                }
+            }, 0, 1000);
+        } else {
+            timer12 = 0;
+            timer.cancel();
+            nm.cancel(127);
+        }
     }
+
 
         @Override
         public IBinder onBind(Intent intent) {
-            Toast.makeText(getApplicationContext(), ("сервис блед onBIND"), Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(getApplicationContext(), ("сервис блед onBIND"), Toast.LENGTH_LONG).show();
             return null;
 
         }
-        public void kek(long timer12){
+        public void kek(long timer12) {
 
             builder
                     .setContentIntent(pendingIntent)
                     .setSmallIcon(R.mipmap.icon)
                     .setLargeIcon(BitmapFactory.decodeResource(getApplication().getResources(), R.mipmap.icon))
                     .setTicker("Первый стол")
-                   // .setWhen(System.currentTimeMillis())
-                    .setAutoCancel(true)
+                    // .setWhen(System.currentTimeMillis())
+                    // .setAutoCancel(true)
                     .setContentTitle("Первый стол")
-                    .setContentText("Время с посаки(ч:мм) = " + " "+ timer12 );
+                    .setContentText("Время с посаки = Часов: " + timer12/3600 + ", минут: "+ timer12/60 ) ;
             notification = builder.build();
+            nm.notify(NOTIFICATION_ID, notification);
+            if ((timer12/60 > 20) && (timer12/60 < 22)) {
+                vibrator.vibrate(2000);
+            }
 
-        }
+}
+
+
+
+
+
 
         @Override
         public void onDestroy() {

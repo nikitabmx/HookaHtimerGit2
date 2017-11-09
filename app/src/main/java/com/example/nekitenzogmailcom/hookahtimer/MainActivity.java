@@ -23,7 +23,7 @@ import static com.example.nekitenzogmailcom.hookahtimer.R.layout.activity_main;
 
 public class MainActivity extends AppCompatActivity {
     private NotificationManager nm;
-    boolean starter1;
+
     boolean starter2;
     boolean starter3;
     boolean starter4;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     Intent intentService;
     public long elapsedMillis1,sec1,min1,hours1;
-    int starting1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        starter1 = false;
+
         starter2 = false;
         starter3 = false;
         starter4 = false;
@@ -125,9 +125,7 @@ public class MainActivity extends AppCompatActivity {
         final CheckBox check3Tbl10 = (CheckBox)findViewById(R.id.check3Tbl10);
 //-----------------------------------------------------------------------------
         start1.setOnClickListener(new View.OnClickListener() {
-
-       //  long elapsedMillis1,sec1,min1,hours1;
-            // long elapsedMillis = SystemClock.elapsedRealtime() - chronometer9.getBase();
+            private boolean starter1;
             @Override
             public void onClick(View view){
 
@@ -135,13 +133,14 @@ public class MainActivity extends AppCompatActivity {
                     chronometer1.setBase(SystemClock.elapsedRealtime());
                     start1.setText("Сброс!");
                     chronometer1.start();
-                    prepairIntent();
-                    starting1 = 1;
-                    startService(intentService);
-                   //  startService(new Intent(MainActivity.this, HookahService.class));
-                    // startService(new Intent(MainActivity.this, HookahService.class));
 
-                //    start1.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.red));
+
+//                    prepairIntent(kek1,starter1);
+//
+//                    startService(intentService);
+
+
+
                     start1.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.stop_buttons));
                     starter1 = true;
 
@@ -156,13 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                            if (elapsedMillis1 > 4000 && elapsedMillis1 < 7000) {
-                                    String strElapsedMillis = "Первая смена углей 9 стола!";
-                                    Toast.makeText(getApplicationContext(), strElapsedMillis, Toast.LENGTH_LONG).show();
-                                  //   vibrator.vibrate(2000);
 
-
-                                }
 
 
                         }
@@ -176,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 else {
-                    nm.cancel(127);
+
                     check1Tbl1.setChecked(false);
                     check2Tbl1.setChecked(false);
                     check3Tbl1.setChecked(false);
@@ -190,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                //     start1.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.green));
                     start1.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.start_button));
                     starter1 = false;
+
                 }
                 check1Tbl1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -210,6 +204,9 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+                prepairIntent(kek1,starter1);
+
+                startService(intentService);
             }
 
 
@@ -838,7 +835,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
+    String kek = "kekes";
 //public void startService(View view){
 //
 //intent =  Intent(this,HookahService.class);
@@ -846,14 +843,16 @@ public class MainActivity extends AppCompatActivity {
 //    intent.putExtra("kekes",kek);
 //}
 
-long kek1 = elapsedMillis1;
-    public void prepairIntent(){
-        String kek = "kekes";
+    long kek1 = elapsedMillis1;
+    void prepairIntent(long kek1,boolean starter1){
+
+
+
 
         intentService = new Intent(this,HookahService.class);
-        //intentService.putExtra("FirstTimer",kek1);
+        intentService.putExtra("FirstTimer",kek1);
         intentService.putExtra("kek",kek);
-        intentService.putExtra("bolshit1",starting1);
+        intentService.putExtra("starter1",starter1);
     }
 
     @Override
